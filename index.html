@@ -1,244 +1,202 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>I LOVE YOU</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>I LOVE YOU</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Short+Stack&family=Homemade+Apple&display=swap">
-  <link rel="stylesheet" href="card.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Short+Stack&family=Homemade+Apple&display=swap">
+<link rel="stylesheet" href="card.css">
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: 'Short Stack', cursive;
-    }
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:'Short Stack',cursive;
+}
 
-    video {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      min-height: 100%;
-      z-index: -2;
-    }
+/* VIDEO */
+video{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  min-width:100%;
+  min-height:100%;
+  z-index:-2;
+}
 
-    #blurLayer {
-      position: fixed;
-      inset: 0;
-      backdrop-filter: blur(8px);
-      background: rgba(0,0,0,0.4);
-      z-index: 50;
-      display: none;
-    }
+/* SLIDER */
+#slider{
+  display:flex;
+  width:200vw;
+  height:100vh;
+  transition:transform .6s ease;
+}
+.page{
+  width:100vw;
+  height:100vh;
+  position:relative;
+}
 
-    #rotateNotice {
-      position: fixed;
-      inset: 0;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: white;
-      z-index: 100;
-      text-align: center;
-    }
+/* HALAMAN 2 */
+.page-2{
+  background:linear-gradient(135deg,#000,#111);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-align:center;
+}
+.page-2 img{
+  width:250px;
+  border-radius:20px;
+  margin-bottom:20px;
+}
+.page-2 p{
+  font-size:18px;
+  max-width:400px;
+}
 
-    #rotateIcon {
-      font-size: 80px;
-      animation: rotatePhone 1.5s infinite ease-in-out;
-    }
+/* OPENING */
+#openingScreen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  z-index:9999;
+}
+#openingScreen button{
+  padding:14px 30px;
+  border-radius:30px;
+  border:none;
+  font-size:18px;
+  background:white;
+  color:#ff4d6d;
+}
 
-    @keyframes rotatePhone {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(90deg); }
-      100% { transform: rotate(0deg); }
-    }
+/* ENDING */
+#endingScreen{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  z-index:9999;
+}
+#endingScreen img{
+  width:220px;
+  border-radius:20px;
+}
 
-    #lyrics {
-      position: fixed;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 32px;
-      color: white;
-      text-align: center;
-      z-index: 5;
-      text-shadow: 0 0 15px rgba(255,255,255,0.8);
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
+/* BUTTON */
+#startBtn,#loveBtn{
+  position:fixed;
+  bottom:20px;
+  padding:12px 22px;
+  border-radius:30px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  z-index:999;
+}
+#startBtn{ right:20px; }
+#loveBtn{ left:20px; animation:pulse 1.5s infinite; }
 
-    #startBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 22px;
-      border-radius: 30px;
-      border: none;
-      background: #ff4d6d;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 999;
-    }
-
-    /* OPENING */
-    #openingScreen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      z-index: 9999;
-      text-align: center;
-    }
-
-    #openingScreen button {
-      padding: 14px 30px;
-      border-radius: 30px;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      background: white;
-      color: #ff4d6d;
-      margin-top: 20px;
-    }
-
-    /* ENDING */
-    #endingScreen {
-      position: fixed;
-      inset: 0;
-      background: black;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      z-index: 9999;
-      text-align: center;
-    }
-
-    #endingScreen img {
-      width: 220px;
-      border-radius: 20px;
-      margin: 20px 0;
-    }
-
-    /* LOVE BUTTON */
-    #loveBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 12px 22px;
-      border-radius: 30px;
-      border: none;
-      background: #ff4d6d;
-      color: white;
-      cursor: pointer;
-      z-index: 999;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-  </style>
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- OPENING -->
-  <div id="openingScreen">
-    <h1>Hallooooo Sayanggg💕</h1>
-    <p>Abang punya sesuatu buat Adeeeekkkk...</p>
-    <button id="openBtn">Pencet💕</button>
-  </div>
+<!-- OPENING -->
+<div id="openingScreen">
+  <h1>Halloooo Sayanggg💕</h1>
+  <p>Abang punya sesuatu buat Adeeeekkkk...</p>
+  <button id="openBtn">Pencet 💕</button>
+</div>
 
-  <!-- VIDEO -->
-  <video autoplay loop muted preload="auto">
-    <source src="video/ytvideo.mp4" type="video/mp4">
-  </video>
+<!-- VIDEO -->
+<video autoplay loop muted>
+  <source src="video/ytvideo.mp4" type="video/mp4">
+</video>
 
-  <div id="blurLayer"></div>
-  <div id="rotateNotice">
-    <div id="rotateIcon">📱</div>
-    <h2>ganti ke mode Landscape Sayanggg</h2>
-    <p>biar lebih jelas cantiknyaaa💕</p>
-  </div>
+<!-- SLIDER -->
+<div id="slider">
 
-  <div id="lyrics"></div>
+  <!-- PAGE 1 -->
+  <section class="page page-1">
+    <div class="paper image"><p>naaa kiss</p><img src="gambar/gambar1.jpg"></div>
+    <div class="paper image"><p>eeuummm</p><img src="gambar/gambar2.jpg"></div>
+    <div class="paper image"><p>smile china</p><img src="gambar/gambar3.jpg"></div>
+    <div class="paper image"><p>look my eyes</p><img src="gambar/gambar4.jpg"></div>
+  </section>
 
-  <!-- KARTU -->
-  <div class="paper image"><p>naaa kiss</p><img src="gambar/gambar1.jpg"></div>
-  <div class="paper image"><p>eeuummm</p><img src="gambar/gambar2.jpg"></div>
-  <div class="paper image"><p>smile china</p><img src="gambar/gambar3.jpg"></div>
-  <div class="paper image"><p>look my eyes</p><img src="gambar/gambar4.jpg"></div>
+  <!-- PAGE 2 -->
+  <section class="page page-2">
+    <img src="gambar/gambar5.jpg">
+    <h1>Untuk Adeeeekkkk Araaa❤️</h1>
+    <p>
+      Terima kasih sudah hadir di hidup Acel.  
+      Semoga kita selalu bersama, tertawa,  
+      dan saling mencintai🥺💕
+    </p>
+  </section>
 
-  <!-- BUTTON -->
-  <button id="startBtn">▶💕Mulai Musik</button>
-  <button id="loveBtn">Araaa Sayang Acel💕</button>
+</div>
 
-  <!-- ENDING -->
-  <div id="endingScreen">
-    <h1>Acel Sayang Araaa💕</h1>
-    <img src="gambar/gambar4.jpg">
-    <h1>Makasih sudah lihat sampai akhir💕🥺</h1>
-  </div>
+<button id="startBtn">▶💕Mulai Musik</button>
+<button id="loveBtn">Araaa💕</button>
 
-  <!-- AUDIO -->
-  <audio id="music" src="audio/music.mp3"></audio>
+<!-- ENDING -->
+<div id="endingScreen">
+  <h1>Acel Sayang Araaa💕</h1>
+  <img src="gambar/gambar4.jpg">
+  <h2>Makasih sudah lihat sampai akhir💕🥺</h2>
+</div>
 
-  <script src="card.js"></script>
+<audio id="music" src="audio/music.mp3"></audio>
 
-  <script>
-    const music = document.getElementById("music");
-    const startBtn = document.getElementById("startBtn");
-    const lyricsEl = document.getElementById("lyrics");
-    const opening = document.getElementById("openingScreen");
-    const openBtn = document.getElementById("openBtn");
-    const ending = document.getElementById("endingScreen");
-    const loveBtn = document.getElementById("loveBtn");
+<script src="card.js"></script>
 
-    openBtn.onclick = () => opening.style.display = "none";
+<script>
+/* OPEN */
+openBtn.onclick=()=>openingScreen.style.display="none";
 
-    startBtn.onclick = () => {
-      music.volume = 0.8;
-      music.play();
-      startBtn.style.display = "none";
-    };
+/* MUSIC */
+startBtn.onclick=()=>{
+  music.play();
+  startBtn.style.display="none";
+}
+music.onended=()=>endingScreen.style.display="flex";
 
-    loveBtn.onclick = () => alert("Acel juga sayang Araaa💕🥰");
+/* SWIPE */
+const slider=document.getElementById("slider");
+let page=0,startX=0;
 
-    music.onended = () => ending.style.display = "flex";
+document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+document.addEventListener("touchend",e=>{
+  let diff=startX-e.changedTouches[0].clientX;
+  if(diff>50&&page===0){page=1;}
+  if(diff<-50&&page===1){page=0;}
+  slider.style.transform=`translateX(-${page*100}vw)`;
+});
 
-    const blur = document.getElementById("blurLayer");
-    const notice = document.getElementById("rotateNotice");
-
-    function checkOrientation() {
-      if (window.innerHeight > window.innerWidth) {
-        blur.style.display = "block";
-        notice.style.display = "flex";
-      } else {
-        blur.style.display = "none";
-        notice.style.display = "none";
-      }
-    }
-
-    window.addEventListener("resize", checkOrientation);
-    window.addEventListener("load", checkOrientation);
-  </script>
+/* LOVE */
+loveBtn.onclick=()=>alert("Acel juga sayang Araaa💕🥰");
+</script>
 
 </body>
 </html>
-
-
-
-
