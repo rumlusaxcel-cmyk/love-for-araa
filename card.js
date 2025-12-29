@@ -84,11 +84,3 @@ class Paper {
     });
   }
 }
-
-/* ===================== */
-/* INIT */
-const papers = document.querySelectorAll(".paper");
-papers.forEach(paper => {
-  const p = new Paper();
-  p.init(paper);
-});
