@@ -2,8 +2,6 @@ let highestZ = 1;
 
 class Paper {
   holdingPaper = false;
-  mouseTouchX = 0;
-  mouseTouchY = 0;
   mouseX = 0;
   mouseY = 0;
   prevMouseX = 0;
@@ -13,12 +11,11 @@ class Paper {
   rotation = Math.random() * 30 - 15;
   currentPaperX = 0;
   currentPaperY = 0;
-  rotating = false;
 
   init(paper) {
 
     /* ===================== */
-    /* MOUSE MOVE (DESKTOP) */
+    /* DESKTOP (MOUSE) */
     /* ===================== */
     document.addEventListener("mousemove", (e) => {
       if (!this.holdingPaper) return;
@@ -26,12 +23,11 @@ class Paper {
       this.mouseX = e.clientX;
       this.mouseY = e.clientY;
 
-      if (!this.rotating) {
-        this.velX = this.mouseX - this.prevMouseX;
-        this.velY = this.mouseY - this.prevMouseY;
-        this.currentPaperX += this.velX;
-        this.currentPaperY += this.velY;
-      }
+      this.velX = this.mouseX - this.prevMouseX;
+      this.velY = this.mouseY - this.prevMouseY;
+
+      this.currentPaperX += this.velX;
+      this.currentPaperY += this.velY;
 
       this.prevMouseX = this.mouseX;
       this.prevMouseY = this.mouseY;
@@ -41,35 +37,29 @@ class Paper {
     });
 
     paper.addEventListener("mousedown", (e) => {
-      if (this.holdingPaper) return;
       this.holdingPaper = true;
       paper.style.zIndex = highestZ++;
-
       this.prevMouseX = e.clientX;
       this.prevMouseY = e.clientY;
-
-      if (e.button === 2) this.rotating = true;
     });
 
     window.addEventListener("mouseup", () => {
       this.holdingPaper = false;
-      this.rotating = false;
     });
 
     /* ===================== */
-    /* TOUCH SUPPORT (HP) */
+    /* MOBILE (TOUCH) */
     /* ===================== */
     paper.addEventListener("touchstart", (e) => {
-      e.preventDefault();
       this.holdingPaper = true;
       paper.style.zIndex = highestZ++;
 
       const touch = e.touches[0];
       this.prevMouseX = touch.clientX;
       this.prevMouseY = touch.clientY;
-    }, { passive: false });
+    }, { passive: true });
 
-    document.addEventListener("touchmove", (e) => {
+    paper.addEventListener("touchmove", (e) => {
       if (!this.holdingPaper) return;
 
       const touch = e.touches[0];
@@ -87,18 +77,16 @@ class Paper {
 
       paper.style.transform =
         `translate(${this.currentPaperX}px, ${this.currentPaperY}px) rotate(${this.rotation}deg)`;
-    }, { passive: false });
+    }, { passive: true });
 
-    window.addEventListener("touchend", () => {
+    paper.addEventListener("touchend", () => {
       this.holdingPaper = false;
-      this.rotating = false;
     });
   }
 }
 
 /* ===================== */
 /* INIT */
-/* ===================== */
 const papers = document.querySelectorAll(".paper");
 papers.forEach(paper => {
   const p = new Paper();
