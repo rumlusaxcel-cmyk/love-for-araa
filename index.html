@@ -15,7 +15,6 @@
       font-family: 'Short Stack', cursive;
     }
 
-    /* Background video */
     video {
       position: fixed;
       top: 50%;
@@ -26,7 +25,6 @@
       z-index: -2;
     }
 
-    /* Blur layer */
     #blurLayer {
       position: fixed;
       inset: 0;
@@ -36,7 +34,6 @@
       display: none;
     }
 
-    /* Instruksi landscape */
     #rotateNotice {
       position: fixed;
       inset: 0;
@@ -60,14 +57,6 @@
       100% { transform: rotate(0deg); }
     }
 
-    .content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      color: white;
-    }
-
-    /* Lirik */
     #lyrics {
       position: fixed;
       top: 45%;
@@ -82,7 +71,6 @@
       transition: opacity 0.6s ease;
     }
 
-    /* Tombol musik */
     #startBtn {
       position: fixed;
       bottom: 20px;
@@ -94,92 +82,143 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
+      z-index: 999;
+    }
+
+    /* OPENING */
+    #openingScreen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
       z-index: 9999;
+      text-align: center;
+    }
+
+    #openingScreen button {
+      padding: 14px 30px;
+      border-radius: 30px;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      background: white;
+      color: #ff4d6d;
+      margin-top: 20px;
+    }
+
+    /* ENDING */
+    #endingScreen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 9999;
+      text-align: center;
+    }
+
+    #endingScreen img {
+      width: 220px;
+      border-radius: 20px;
+      margin: 20px 0;
+    }
+
+    /* LOVE BUTTON */
+    #loveBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 12px 22px;
+      border-radius: 30px;
+      border: none;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+      z-index: 999;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Background video -->
+  <!-- OPENING -->
+  <div id="openingScreen">
+    <h1>Hai kamu 💕</h1>
+    <p>Ada sesuatu buat kamu...</p>
+    <button id="openBtn">Masuk ✨</button>
+  </div>
+
+  <!-- VIDEO -->
   <video autoplay loop muted preload="auto">
     <source src="video/ytvideo.mp4" type="video/mp4">
   </video>
 
-  <!-- Blur & rotate notice -->
   <div id="blurLayer"></div>
   <div id="rotateNotice">
     <div id="rotateIcon">📱</div>
     <h2>Putar HP ke Landscape</h2>
-    <p>Agar tampilan lebih indah 💕</p>
+    <p>Agar lebih indah 💕</p>
   </div>
 
-  <!-- Lirik -->
   <div id="lyrics"></div>
 
-  <div class="content">
-    <h1></h1>
-  </div>
+  <!-- KARTU -->
+  <div class="paper image"><p>naaa kiss</p><img src="gambar/gambar1.jpg"></div>
+  <div class="paper image"><p>eeuummm</p><img src="gambar/gambar2.jpg"></div>
+  <div class="paper image"><p>smile china</p><img src="gambar/gambar3.jpg"></div>
+  <div class="paper image"><p>look my eyes</p><img src="gambar/gambar4.jpg"></div>
 
-  <!-- Kartu -->
-  <div class="paper image">
-    <p>naaa kiss</p>
-    <img src="gambar/gambar1.jpg">
-  </div>
-
-  <div class="paper image">
-    <p>eeuummm</p>
-    <img src="gambar/gambar2.jpg">
-  </div>
-
-  <div class="paper image">
-    <p>smile china</p>
-    <img src="gambar/gambar3.jpg">
-  </div>
-
-  <div class="paper image">
-    <p>look my eyes</p>
-    <img src="gambar/gambar4.jpg">
-  </div>
-
-  <!-- Tombol musik -->
+  <!-- BUTTON -->
   <button id="startBtn">▶💕 Mulai Musik</button>
+  <button id="loveBtn">💖 Aku Sayang Kamu</button>
+
+  <!-- ENDING -->
+  <div id="endingScreen">
+    <h1>Aku Sayang Kamu 💖</h1>
+    <img src="gambar/gambar4.jpg">
+    <p>Makasih sudah lihat sampai akhir 🥺</p>
+  </div>
 
   <!-- AUDIO -->
   <audio id="music" src="audio/music.mp3"></audio>
 
-  <!-- Script kartu -->
   <script src="card.js"></script>
 
-  <!-- Script musik + lirik -->
   <script>
     const music = document.getElementById("music");
-    const lyricsEl = document.getElementById("lyrics");
     const startBtn = document.getElementById("startBtn");
+    const lyricsEl = document.getElementById("lyrics");
+    const opening = document.getElementById("openingScreen");
+    const openBtn = document.getElementById("openBtn");
+    const ending = document.getElementById("endingScreen");
+    const loveBtn = document.getElementById("loveBtn");
 
-    const lyrics = [
-      { time: 6, text: "" },
-    ];
-    let index = 0;
+    openBtn.onclick = () => opening.style.display = "none";
 
-    startBtn.addEventListener("click", () => {
+    startBtn.onclick = () => {
       music.volume = 0.8;
       music.play();
       startBtn.style.display = "none";
-    });
+    };
 
-    music.addEventListener("timeupdate", () => {
-      if (index < lyrics.length && music.currentTime >= lyrics[index].time) {
-        lyricsEl.style.opacity = 0;
-        setTimeout(() => {
-          lyricsEl.textContent = lyrics[index].text;
-          lyricsEl.style.opacity = 1;
-          index++;
-        }, 300);
-      }
-    });
+    loveBtn.onclick = () => alert("Aku juga sayang kamu 💕🥰");
 
-    /* LANDSCAPE DETECTION */
+    music.onended = () => ending.style.display = "flex";
+
     const blur = document.getElementById("blurLayer");
     const notice = document.getElementById("rotateNotice");
 
