@@ -1,6 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&family=Rubik:wght@300;400;500;600;700;800&display=swap");
 
 /* ===================== */
+/* GLOBAL (PENTING HP) */
+/* ===================== */
+
+body {
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+/* ===================== */
 /* KARTU */
 /* ===================== */
 
@@ -16,7 +25,7 @@
   text-align: center;
   cursor: grab;
 
-  /* ✅ TAMBAHAN PENTING UNTUK HP */
+  /* ✅ WAJIB UNTUK DRAG DI HP */
   touch-action: none;
   user-select: none;
 }
@@ -70,8 +79,7 @@ p {
 /* ===================== */
 
 @keyframes glow {
-  0%,
-  100% {
+  0%,100% {
     text-shadow:
       0 0 10px #fff,
       0 0 20px #fff,
@@ -99,7 +107,7 @@ p {
   z-index: 50;
   display: none;
 
-  /* ✅ TAMBAHAN: jangan blok sentuhan */
+  /* ✅ TIDAK BLOK SENTUHAN */
   pointer-events: none;
 }
 
@@ -119,7 +127,7 @@ p {
   z-index: 100;
   font-family: "Poppins", sans-serif;
 
-  /* ✅ TAMBAHAN: jangan blok sentuhan */
+  /* ✅ TIDAK BLOK SENTUHAN */
   pointer-events: none;
 }
 
@@ -134,7 +142,7 @@ p {
 }
 
 /* ===================== */
-/* ICON ROTATE ANIMASI */
+/* ICON ROTATE */
 /* ===================== */
 
 #rotateIcon {
