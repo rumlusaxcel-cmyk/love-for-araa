@@ -117,22 +117,20 @@ video{
   100%{transform:scale(1)}
 }
 
-/* SWIPE INDICATOR */
-#swipeHint{
+/* NAV BUTTON */
+#nextPage,#prevPage{
   position:fixed;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
+  bottom:90px;
+  padding:12px 22px;
+  border-radius:30px;
+  border:none;
+  background:rgba(255,77,109,.9);
   color:white;
   font-size:16px;
-  z-index:1000;
-  animation:swipeAnim 1.5s infinite;
+  z-index:999;
 }
-@keyframes swipeAnim{
-  0%{opacity:.3;transform:translateX(-50%) translateX(-10px)}
-  50%{opacity:1;transform:translateX(-50%) translateX(10px)}
-  100%{opacity:.3;transform:translateX(-50%) translateX(-10px)}
-}
+#nextPage{ right:20px; }
+#prevPage{ left:20px; display:none; }
 </style>
 </head>
 
@@ -149,9 +147,6 @@ video{
 <video autoplay loop muted>
   <source src="video/ytvideo.mp4" type="video/mp4">
 </video>
-
-<!-- SWIPE HINT -->
-<div id="swipeHint">⇆ Geser ke samping sayang 💕</div>
 
 <!-- SLIDER -->
 <div id="slider">
@@ -177,6 +172,10 @@ video{
 
 </div>
 
+<!-- NAV -->
+<button id="nextPage">Geser ➜</button>
+<button id="prevPage">⬅ Kembali</button>
+
 <button id="startBtn">▶💕Mulai Musik</button>
 <button id="loveBtn">Araaa💕</button>
 
@@ -192,39 +191,38 @@ video{
 <script src="card.js"></script>
 
 <script>
-const openBtn=document.getElementById("openBtn");
-const openingScreen=document.getElementById("openingScreen");
-const music=document.getElementById("music");
-const startBtn=document.getElementById("startBtn");
-const endingScreen=document.getElementById("endingScreen");
-const slider=document.getElementById("slider");
-const swipeHint=document.getElementById("swipeHint");
-const loveBtn=document.getElementById("loveBtn");
-
+/* OPEN */
 openBtn.onclick=()=>openingScreen.style.display="none";
 
+/* MUSIC */
 startBtn.onclick=()=>{
   music.play();
   startBtn.style.display="none";
-};
-
+}
 music.onended=()=>endingScreen.style.display="flex";
 
-/* SWIPE */
-let page=0,startX=0,swiped=false;
+/* PAGE NAV */
+const slider=document.getElementById("slider");
+const nextBtn=document.getElementById("nextPage");
+const prevBtn=document.getElementById("prevPage");
 
-document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-document.addEventListener("touchend",e=>{
-  let diff=startX-e.changedTouches[0].clientX;
-  if(diff>50&&page===0){page=1;}
-  if(diff<-50&&page===1){page=0;}
-  slider.style.transform=`translateX(-${page*100}vw)`;
-  if(!swiped){
-    swipeHint.style.display="none";
-    swiped=true;
-  }
-});
+let page=0;
 
+nextBtn.onclick=()=>{
+  page=1;
+  slider.style.transform="translateX(-100vw)";
+  nextBtn.style.display="none";
+  prevBtn.style.display="block";
+};
+
+prevBtn.onclick=()=>{
+  page=0;
+  slider.style.transform="translateX(0)";
+  prevBtn.style.display="none";
+  nextBtn.style.display="block";
+};
+
+/* LOVE */
 loveBtn.onclick=()=>alert("Acel juga sayang Araaa💕🥰");
 </script>
 
