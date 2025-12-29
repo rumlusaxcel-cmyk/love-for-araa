@@ -39,7 +39,7 @@ video{
   position:relative;
 }
 
-/* HALAMAN 2 */
+/* PAGE 2 */
 .page-2{
   background:linear-gradient(135deg,#000,#111);
   display:flex;
@@ -116,6 +116,23 @@ video{
   50%{transform:scale(1.1)}
   100%{transform:scale(1)}
 }
+
+/* SWIPE INDICATOR */
+#swipeHint{
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  color:white;
+  font-size:16px;
+  z-index:1000;
+  animation:swipeAnim 1.5s infinite;
+}
+@keyframes swipeAnim{
+  0%{opacity:.3;transform:translateX(-50%) translateX(-10px)}
+  50%{opacity:1;transform:translateX(-50%) translateX(10px)}
+  100%{opacity:.3;transform:translateX(-50%) translateX(-10px)}
+}
 </style>
 </head>
 
@@ -132,6 +149,9 @@ video{
 <video autoplay loop muted>
   <source src="video/ytvideo.mp4" type="video/mp4">
 </video>
+
+<!-- SWIPE HINT -->
+<div id="swipeHint">⇆ Geser ke samping sayang 💕</div>
 
 <!-- SLIDER -->
 <div id="slider">
@@ -172,19 +192,26 @@ video{
 <script src="card.js"></script>
 
 <script>
-/* OPEN */
+const openBtn=document.getElementById("openBtn");
+const openingScreen=document.getElementById("openingScreen");
+const music=document.getElementById("music");
+const startBtn=document.getElementById("startBtn");
+const endingScreen=document.getElementById("endingScreen");
+const slider=document.getElementById("slider");
+const swipeHint=document.getElementById("swipeHint");
+const loveBtn=document.getElementById("loveBtn");
+
 openBtn.onclick=()=>openingScreen.style.display="none";
 
-/* MUSIC */
 startBtn.onclick=()=>{
   music.play();
   startBtn.style.display="none";
-}
+};
+
 music.onended=()=>endingScreen.style.display="flex";
 
 /* SWIPE */
-const slider=document.getElementById("slider");
-let page=0,startX=0;
+let page=0,startX=0,swiped=false;
 
 document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
 document.addEventListener("touchend",e=>{
@@ -192,9 +219,12 @@ document.addEventListener("touchend",e=>{
   if(diff>50&&page===0){page=1;}
   if(diff<-50&&page===1){page=0;}
   slider.style.transform=`translateX(-${page*100}vw)`;
+  if(!swiped){
+    swipeHint.style.display="none";
+    swiped=true;
+  }
 });
 
-/* LOVE */
 loveBtn.onclick=()=>alert("Acel juga sayang Araaa💕🥰");
 </script>
 
