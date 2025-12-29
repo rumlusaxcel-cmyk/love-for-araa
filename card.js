@@ -104,18 +104,3 @@ papers.forEach(paper => {
   const p = new Paper();
   p.init(paper);
 });
-
-/* ===================== */
-/* FIX TOUCH BLOCKING */
-/* ===================== */
-
-#blurLayer,
-#rotateNotice {
-  pointer-events: none;
-}
-
-/* Aktifkan sentuhan hanya saat tampil */
-#blurLayer.active,
-#rotateNotice.active {
-  pointer-events: auto;
-}
